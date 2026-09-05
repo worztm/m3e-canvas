@@ -2887,7 +2887,9 @@ export default function Page() {
                             ? "linear-gradient(145deg, #4a4d52 0%, #1c1d20 30%, #0a0a0b 60%, #2a2c30 100%)"
                             : p.inverseSurface,
                           boxShadow: on
-                            ? `0 0 0 3px ${p.primary}, 0 18px 50px rgba(0,0,0,0.16)`
+                            ? isIphoneFrame(f)
+                              ? `0 0 0 3px ${p.primary}, 0 18px 50px rgba(0,0,0,0.35), inset 0 0 0 2px #3a3d42, inset 0 0 14px rgba(0,0,0,0.8)`
+                              : `0 0 0 3px ${p.primary}, 0 18px 50px rgba(0,0,0,0.16)`
                             : isIphoneFrame(f)
                               ? "0 18px 50px rgba(0,0,0,0.35), inset 0 0 0 2px #3a3d42, inset 0 0 14px rgba(0,0,0,0.8)"
                               : "0 18px 50px rgba(0,0,0,0.14)",

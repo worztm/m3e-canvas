@@ -761,7 +761,6 @@ export function Preview({
                   {iphone && (current.chrome ?? true) && <IosScreenChrome />}
                 </motion.div>
               </AnimatePresence>
-              {iphone && (current.chrome ?? true) && <IosSideButtons />}
             </motion.div>
             {peek && peekFrame && (
               <motion.div
@@ -776,9 +775,11 @@ export function Preview({
               >
                 <Screen frame={peekFrame} groups={peekGroups} {...screenProps} />
                 {isIphoneFrame(peekFrame) && (peekFrame.chrome ?? true) && <IosScreenChrome />}
+                {isIphoneFrame(peekFrame) && (peekFrame.chrome ?? true) && <IosSideButtons />}
               </motion.div>
             )}
           </motion.div>
+          {iphone && (current.chrome ?? true) && <IosSideButtons />}
         </motion.div>
       </div>
 
@@ -831,7 +832,7 @@ export function Preview({
                 maxWidth: wide ? undefined : 200,
               }}
             >
-              <Icon name={phone ? "phone_iphone" : "desktop_windows"} size={20} />
+              <Icon name={iphone ? "phone_iphone" : phone ? "smartphone" : "desktop_windows"} size={20} />
               <span style={{ ...label, flex: wide ? 1 : undefined, textAlign: "left" }}>{current.name || t("screen", lang)}</span>
               <Icon name={wide ? (picker ? "chevron_right" : "chevron_left") : picker ? "expand_more" : "expand_less"} size={18} />
             </button>

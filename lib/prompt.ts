@@ -917,10 +917,10 @@ const PH = {
     intro: (title: string, brief: string) => `${title}を Material 3 Expressive のデザインで実装してください。${brief ? trimEnd(brief) + "。" : ""}`,
     titleOnly: (name: string) => `${name}画面`,
     titleAll: (n: number) => (n > 1 ? "このアプリ" : "この画面"),
-    target: (vp: Viewport, pl: Platform, dark: boolean, both: boolean) =>
+    target: (vp: Viewport, pl: Platform, dark: boolean, both: boolean, iphone: boolean) =>
       `${
         vp === "phone"
-          ? pl === "ios"
+          ? iphone
             ? "想定は iPhone の縦画面（402×874pt）で、"
             : "想定はスマホの縦画面（412×892dp）で、"
           : vp === "desktop"
@@ -963,10 +963,10 @@ const PH = {
     intro: (title: string, brief: string) => `Please implement ${title} in the Material 3 Expressive design language.${brief ? ` ${trimEnd(brief)}.` : ""}`,
     titleOnly: (name: string) => `the ${name} screen`,
     titleAll: (n: number) => (n > 1 ? "this app" : "this screen"),
-    target: (vp: Viewport, pl: Platform, dark: boolean, both: boolean) =>
+    target: (vp: Viewport, pl: Platform, dark: boolean, both: boolean, iphone: boolean) =>
       `${
         vp === "phone"
-          ? pl === "ios"
+          ? iphone
             ? "Target a portrait iPhone screen (402×874pt)"
             : "Target a portrait phone screen (412×892dp)"
           : vp === "desktop"
@@ -1009,10 +1009,10 @@ const PH = {
     intro: (title: string, brief: string) => `请用 Material 3 Expressive 的设计实现${title}。${brief ? trimEnd(brief) + "。" : ""}`,
     titleOnly: (name: string) => `${name}屏幕`,
     titleAll: (n: number) => (n > 1 ? "这个应用" : "这个屏幕"),
-    target: (vp: Viewport, pl: Platform, dark: boolean, both: boolean) =>
+    target: (vp: Viewport, pl: Platform, dark: boolean, both: boolean, iphone: boolean) =>
       `${
         vp === "phone"
-          ? pl === "ios"
+          ? iphone
             ? "目标为竖屏 iPhone 屏幕（402×874pt）"
             : "目标为竖屏手机（412×892dp）"
           : vp === "desktop"
@@ -1091,7 +1091,7 @@ export function buildPrompt(doc: Doc, widths: Record<string, number>, onlyFrameI
 
   const title = only ? ph.titleOnly(q(only.name || ph.screen)) : doc.title.trim() || ph.titleAll(frames.length);
   lines.push(ph.intro(title, doc.brief.trim()));
-  lines.push(ph.target(viewport, platform, th.dark, th.bothModes));
+  lines.push(ph.target(viewport, platform, th.dark, th.bothModes, frames.length > 0 && frames.every(isIphoneFrame)));
   lines.push(ph.platform(platform));
   lines.push(ph.sketch);
 
